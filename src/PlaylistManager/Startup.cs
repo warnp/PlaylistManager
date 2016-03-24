@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PlaylistManager.Models;
 using PlaylistManager.Services;
-using React.AspNet;
+//using React.AspNet;
 
 namespace PlaylistManager
 {
@@ -56,7 +56,6 @@ namespace PlaylistManager
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
-            services.AddReact();
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -99,10 +98,9 @@ namespace PlaylistManager
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
-            app.UseReact(Configuration =>
-            {
+           
 
-            });
+            
 
             app.UseIdentity();
 
