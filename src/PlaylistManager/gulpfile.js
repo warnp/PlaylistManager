@@ -14,6 +14,9 @@ var paths = {
 };
 
 paths.js = paths.webroot + "js/**/*.js";
+paths.test = paths.webroot + "js/**/*.js";
+paths.minTest = paths.webroot + "js/**/*.min.js";
+paths.concatTestDest = paths.webroot + "js/test.min.js";
 paths.minJs = paths.webroot + "js/**/*.min.js";
 paths.css = paths.webroot + "css/**/*.css";
 paths.minCss = paths.webroot + "css/**/*.min.css";
@@ -23,13 +26,23 @@ paths.jsx = "wwwroot\\js\\ui.jsx";
 paths.minJsx= "wwwroot\\js\\**\\*.min.js";
 paths.compiledJSX = "wwwroot\\js\\ui.min.js";
 
-gulp.task("compile", function () {
+gulp.task("compile:jsx", function () {
     return gulp.src([paths.jsx, "!" + paths.minJsx], { base: "." })
         //.pipe(expect(paths.jsx))
         .pipe(babel())
         .pipe(concat(paths.compiledJSX))
         .pipe(gulp.dest("."));
 });
+
+gulp.task("compile:es2015", function () {
+    return gulp.src([paths.test, "!" + paths.minTest], { base: "." })
+        //.pipe(expect(paths.jsx))
+        .pipe(babel())
+        .pipe(concat(paths.concatTestDest))
+        .pipe(gulp.dest("."));
+});
+
+gulp.task("compile", ["compile:jsx","compile:es2015"]);
 
 gulp.task("clean:js", function (cb) {
     rimraf(paths.concatJsDest, cb);
